@@ -47,9 +47,6 @@ class ExplicitImport
     end
   end
 
-  def self.restore_constant(object, name, new_object)
-  end
-
   def self.constants_to_remove
     exceptions = %w{Object Class Module}
     Object.constants - exceptions
