@@ -14,27 +14,27 @@ class ExplicitImport
   def self.import klass, *constant_paths
     strip(klass)
     constant_paths.each do |constant_path|
-      name_components = constant_path.split('::')
-      constant = find_constant(name_components)
-      set_constant(klass, name_components, constant)
+      path_components = constant_path.split('::')
+      constant = find_constant(path_components)
+      set_constant(klass, path_components, constant)
     end
   end
 
-  def self.find_constant(name_components)
+  def self.find_constant(path_components)
     object = Object
-    name_components.each do |component|
+    path_components.each do |component|
       object = object.const_get(component)
     end
     object
   end
 
-  def self.set_constant(object, name_components, value)
-    if name_components.length == 1
-      imported_name = name_components.first
+  def self.set_constant(object, path_components, value)
+    if path_components.length == 1
+      imported_name = path_components.first
       set_terminal_constant(object, imported_name, value)
     else
-      component = name_components.first
-      rest = name_components[1..-1]
+      component = path_components.first
+      rest = path_components[1..-1]
       ensure_intermediate_constant_exists(object, component)
       set_constant(object.const_get(component), rest, value)
     end
