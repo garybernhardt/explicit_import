@@ -35,7 +35,7 @@ class ExplicitImport
     else
       component = name_components.first
       rest = name_components[1..-1]
-      make_constant_path_component_exist(object, component)
+      ensure_intermediate_constant_exists(object, component)
       set_constant(object.const_get(component), rest, value)
     end
   end
@@ -45,7 +45,7 @@ class ExplicitImport
     object.const_set(imported_name, value)
   end
 
-  def self.make_constant_path_component_exist(object, component)
+  def self.ensure_intermediate_constant_exists(object, component)
     if object.const_get(component).is_a? CantTouchThis
       object.remove_const!(component)
       object.const_set(component, Module.new)
