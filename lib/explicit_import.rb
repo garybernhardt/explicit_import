@@ -63,8 +63,8 @@ class Module
     ExplicitImport::import(self, *args)
   end
 
-  def remove_const!(const_name)
-    remove_const(const_name)
+  def remove_const!(*args)
+    remove_const(*args)
   end
 end
 
