@@ -4,7 +4,7 @@
 
 ## DESCRIPTION:
 
-This module adds explicit imports to Ruby. By calling the new Module.import method, all constants in the class's namespace will be replaced by placeholders, except a few core types and those that are explicitly imported. For example, in this class:
+This module adds explicit imports to Ruby. By calling the `import` method during class or module definition, all constants in the module's namespace will be replaced by placeholders, except a few core types and those that are explicitly imported. For example, in this class:
 
     class Joe
       import 'File'
@@ -35,7 +35,7 @@ As you can see, the constants are *present*, but have placeholder values:
 
 ## ADVISABILITY:
 
-Minimal. You almost certainly don't want to use this. For one thing, it only isolates the class from constants defined before the class itself; subsequent constant definitions will be missed.
+Minimal. You almost certainly don't want to use this. For one thing, it only isolates the module from constants defined before the module itself; subsequent constant definitions will be missed.
 
 There are probably ways to fix that. Patches are welcome if this kind of thing tickles your fancy.
 
