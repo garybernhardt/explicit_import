@@ -34,10 +34,10 @@ class ExplicitImport
       imported_name = path_components.first
       set_terminal_constant(object, imported_name, value)
     else
-      component = path_components.first
+      const_name = path_components.first
       rest = path_components[1..-1]
-      ensure_intermediate_constant_exists(object, component)
-      set_constant(object.const_get(component), rest, value)
+      ensure_intermediate_constant_exists(object, const_name)
+      set_constant(object.const_get(const_name), rest, value)
     end
   end
 
@@ -46,10 +46,10 @@ class ExplicitImport
     object.const_set(imported_name, value)
   end
 
-  def self.ensure_intermediate_constant_exists(object, component)
-    if object.const_get(component).is_a? CantTouchThis
-      object.remove_const!(component)
-      object.const_set(component, Module.new)
+  def self.ensure_intermediate_constant_exists(object, const_name)
+    if object.const_get(const_name).is_a? CantTouchThis
+      object.remove_const!(const_name)
+      object.const_set(const_name, Module.new)
     end
   end
 
