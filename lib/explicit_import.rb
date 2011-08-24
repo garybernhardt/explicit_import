@@ -15,12 +15,12 @@ class ExplicitImport
     strip(klass)
     constant_paths.each do |constant_path|
       path_components = constant_path.split('::')
-      constant = find_constant(path_components)
-      set_constant(klass, path_components, constant)
+      value = find_constant_value(path_components)
+      set_constant(klass, path_components, value)
     end
   end
 
-  def self.find_constant(path_components)
+  def self.find_constant_value(path_components)
     object = Object
     path_components.each do |component|
       object = object.const_get(component)
