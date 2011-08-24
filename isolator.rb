@@ -5,11 +5,21 @@ CantTouchThis = Class.new do
 end.new
 
 class Stripper
-  def self.strip(klass)
+  def self.strip(klass, excludes)
     klass.class_eval do
-      Stripper::constants_to_remove.each do |c|
+      constants = (Stripper::constants_to_remove - excludes.map(&:to_s))
+      constants.each do |c|
         self.const_set c.to_sym, CantTouchThis
       end
+
+    end
+  end
+
+  def self.import klass, *names
+    strip(klass, names)
+    names.each do |name|
+      constant = Stripper::const_get(name)
+      klass.const_set(name, constant)
     end
   end
 
@@ -19,23 +29,33 @@ class Stripper
   end
 end
 
+class Module
+  def import(*args)
+    Stripper::import(self, *args)
+  end
+end
+
 class Joe
-  Stripper::strip(self)
+  import :File
 
   def self.get_io
     IO
   end
 
-  def get_file
+  def self.get_file
     File
   end
 end
 
-# These print the constants; they still exist
-puts IO.inspect
-puts File.inspect
+if __FILE__ == $0
+  # These print the constants; they still exist
+  puts IO.inspect
+  puts File.inspect
 
-# These print <CantTouchThis>; the constants are gone inside Joe
-puts Joe.get_io.inspect
-puts Joe.new.get_file.inspect
+  # This prints <CantTouchThis>; the constant is gone inside Joe
+  puts Joe.get_io.inspect
+
+  # This prints File; Joe imports it, so it can see it
+  puts Joe.get_file.inspect
+end
 
