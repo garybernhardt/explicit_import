@@ -33,16 +33,18 @@ class ExplicitImport
     imported_name = name_components.last
     object = klass
     intermediate_components.each do |component|
-      if object.const_get(component).is_a? CantTouchThis
-        object.remove_const!(component)
-        object.const_set(component, Module.new)
-        object = object.const_get(component)
-      else
-        object = object.const_get(component)
-      end
+      make_constant_path_component_exist(object, component)
+      object = object.const_get(component)
     end
     object.remove_const!(imported_name) if object.const_defined?(imported_name)
     object.const_set(imported_name, constant)
+  end
+
+  def self.make_constant_path_component_exist(object, component)
+    if object.const_get(component).is_a? CantTouchThis
+      object.remove_const!(component)
+      object.const_set(component, Module.new)
+    end
   end
 
   def self.restore_constant(object, name, new_object)
