@@ -1,10 +1,10 @@
-CantTouchThis = Class.new do
-  def to_s
-    '<CantTouchThis>'
-  end
-end.new
-
 class ExplicitImport
+  CantTouchThis = Class.new do
+    def to_s
+      '<CantTouchThis>'
+    end
+  end.new
+
   def self.strip(klass, excludes)
     klass.class_eval do
       constants = (ExplicitImport::constants_to_remove - excludes.map(&:to_s))
