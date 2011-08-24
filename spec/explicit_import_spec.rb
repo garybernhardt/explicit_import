@@ -1,7 +1,7 @@
 require 'lib/explicit_import'
 
 class Joe
-  import :File
+  import 'Enumerable', 'File::Constants', 'File::Enumerator'
 
   def self.get_io
     IO
@@ -11,8 +11,16 @@ class Joe
     IO
   end
 
-  def self.get_file
-    File
+  def self.get_enumerable
+    Enumerable
+  end
+
+  def self.get_file_constants
+    File::Constants
+  end
+
+  def self.get_file_enumerator
+    File::Enumerator
   end
 end
 
@@ -30,7 +38,12 @@ describe ExplicitImport do
   end
 
   it "leaves imported constants alone" do
-    Joe.get_file.should be_a Module
+    Joe.get_enumerable.should be_a Module
+  end
+
+  it "can import nested constants" do
+    Joe.get_file_constants.should be_a Module
+    Joe.get_file_enumerator.should be_a Module
   end
 end
 
