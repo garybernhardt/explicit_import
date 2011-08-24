@@ -28,16 +28,21 @@ class ExplicitImport
     object
   end
 
-  def self.set_constant(klass, name_components, constant)
-    intermediate_components = name_components[0...-1]
-    imported_name = name_components.last
-    object = klass
-    intermediate_components.each do |component|
+  def self.set_constant(object, name_components, value)
+    if name_components.length == 1
+      imported_name = name_components.first
+      set_terminal_constant(object, imported_name, value)
+    else
+      component = name_components.first
+      rest = name_components[1..-1]
       make_constant_path_component_exist(object, component)
-      object = object.const_get(component)
+      set_constant(object.const_get(component), rest, value)
     end
+  end
+
+  def self.set_terminal_constant(object, imported_name, value)
     object.remove_const!(imported_name) if object.const_defined?(imported_name)
-    object.const_set(imported_name, constant)
+    object.const_set(imported_name, value)
   end
 
   def self.make_constant_path_component_exist(object, component)
