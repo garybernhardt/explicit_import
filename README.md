@@ -33,6 +33,8 @@ As you can see, the constants are *present*, but have placeholder values:
     >> Joe.const_get(:Queue)
     => #<ExplicitImport::CantTouchThis:0x10135a8c0>
 
+That's unfortunate. I have an idea about how to make them actually throw a NameError, though it's pretty evil.
+
 ## ADVISABILITY:
 
 Minimal. You almost certainly don't want to use this as it exists right now. For one thing, it only isolates the module from constants defined before the module itself; subsequent constant definitions will be missed.
