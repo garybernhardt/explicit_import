@@ -4,10 +4,10 @@ CantTouchThis = Class.new do
   end
 end.new
 
-class Stripper
+class ExplicitImport
   def self.strip(klass, excludes)
     klass.class_eval do
-      constants = (Stripper::constants_to_remove - excludes.map(&:to_s))
+      constants = (ExplicitImport::constants_to_remove - excludes.map(&:to_s))
       constants.each do |c|
         self.const_set c.to_sym, CantTouchThis
       end
@@ -18,7 +18,7 @@ class Stripper
   def self.import klass, *names
     strip(klass, names)
     names.each do |name|
-      constant = Stripper::const_get(name)
+      constant = ExplicitImport::const_get(name)
       klass.const_set(name, constant)
     end
   end
@@ -31,7 +31,7 @@ end
 
 class Module
   def import(*args)
-    Stripper::import(self, *args)
+    ExplicitImport::import(self, *args)
   end
 end
 
