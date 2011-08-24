@@ -18,7 +18,7 @@ class ExplicitImport
   def self.import klass, *names
     strip(klass, names)
     names.each do |name|
-      constant = ExplicitImport::const_get(name)
+      constant = const_get(name)
       klass.const_set(name, constant)
     end
   end
