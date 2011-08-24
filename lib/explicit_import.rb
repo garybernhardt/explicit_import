@@ -20,12 +20,13 @@ class ExplicitImport
     end
   end
 
-  def self.find_constant_value(path_components)
-    object = Object
-    path_components.each do |component|
-      object = object.const_get(component)
+  def self.find_constant_value(path_components, object=Object)
+    if path_components.empty?
+      object
+    else
+      find_constant_value(path_components[1...-1],
+                          object.const_get(path_components.first))
     end
-    object
   end
 
   def self.set_constant(object, path_components, value)
