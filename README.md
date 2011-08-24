@@ -35,7 +35,7 @@ As you can see, the constants are *present*, but have placeholder values:
 
 ## ADVISABILITY:
 
-Minimal. You almost certainly don't want to use this. For one thing, it only isolates the module from constants defined before the module itself; subsequent constant definitions will be missed.
+Minimal. You almost certainly don't want to use this as it exists right now. For one thing, it only isolates the module from constants defined before the module itself; subsequent constant definitions will be missed.
 
 There are probably ways to fix that. Patches are welcome if this kind of thing tickles your fancy.
 
