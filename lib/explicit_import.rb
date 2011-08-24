@@ -11,7 +11,6 @@ class ExplicitImport
       constants.each do |c|
         self.const_set c.to_sym, CantTouchThis
       end
-
     end
   end
 
