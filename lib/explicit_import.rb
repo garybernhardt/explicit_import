@@ -35,27 +35,3 @@ class Module
   end
 end
 
-class Joe
-  import :File
-
-  def self.get_io
-    IO
-  end
-
-  def self.get_file
-    File
-  end
-end
-
-if __FILE__ == $0
-  # These print the constants; they still exist
-  puts IO.inspect
-  puts File.inspect
-
-  # This prints <CantTouchThis>; the constant is gone inside Joe
-  puts Joe.get_io.inspect
-
-  # This prints File; Joe imports it, so it can see it
-  puts Joe.get_file.inspect
-end
-
