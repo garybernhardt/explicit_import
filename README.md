@@ -1,6 +1,6 @@
 # explicit\_import
 
-* http://github.com/garybernhardt/explicit\_import
+* http://github.com/garybernhardt/explicit_import
 
 ## DESCRIPTION:
 
